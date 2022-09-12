@@ -3,7 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\Random;
+
+// testing
+// use App\Http\Controllers\Random;
+// use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+// use Symfony\Component\HttpFoundation\Test\Constraint\ResponseIsSuccessful;
+
+
 
 class RandomController extends Controller
 {
@@ -27,26 +35,132 @@ class RandomController extends Controller
 
         // dd($request->all());
 
+        // $umuntu = new Random();
+
+
+        // if($file = $request->file('image') ) {
+
+        //     $filename = time().$file->getClientOriginalExtension();
+
+        //     $file->move(public_path('uploads'), $filename);
+
+        //     $umuntu->image = $filename;
+
+        // }
+
+        // $umuntu-> name = $request->input('name');
+        // $umuntu-> email = $request->input('email');
+        // $umuntu-> password = $request->input('password');
+
+        // $umuntu->save();
+
+        // $input = $request->all();
+        // $request = Random::all();
+
+        // $umuntu = $request->all();
+
+        // $validator = new Random;
+        
+        // $validator = $request->validate([
+
+        //     'image' => ['required','mimes:pdf,docx','max:2048'],
+
+        //     'name' => ['required', 'unique:randoms', 'max:255'],
+
+        //     'email' => ['required'],
+            
+        //     'password' => ['required'],
+
+        // ]); 
+
+
+        $validated = $request->validate([
+            
+            'image' => 'required|mimes:jpef,jpg,png|max:2048',
+
+            'name' => 'required|unique:randoms|max:255',
+
+            'email' => 'required',
+            
+            'password' => 'required',
+        ]);
+     
+
+
         $umuntu = new Random();
 
 
-        if($file = $request->file('image') ) {
+        // if($validator->fails()){
+        //     return back()->withInput()->withErrors($validator);
+        // }
 
-            $filename = time().$file->getClientOriginalExtension();
+        // else{
+         
+            
+        //     if($file = $request->file('image') ) {
 
-            $file->move(public_path('uploads'), $filename);
+        //         $filename = time().$file->getClientOriginalExtension();
 
-            $umuntu->image = $filename;
+        //         $file->move(public_path('uploads'), $filename);
 
-        }
+        //         $umuntu->image = $filename;
 
-        $umuntu-> name = $request->input('name');
-        $umuntu-> email = $request->input('email');
-        $umuntu-> password = $request->input('password');
+        //     }
 
-        $umuntu->save();
+        //     $umuntu-> name = $request->name;
+        //     $umuntu-> email = $request->email;
+        //     $umuntu-> password = $request->password;
+
+        //     $umuntu->save();
+
+        // }
+
+
+
+
+
+            if($file = $request->file('image') ) {
+
+                $filename = time().$file->getClientOriginalExtension();
+
+                $file->move(public_path('uploads'), $filename);
+
+                $umuntu->image = $filename;
+
+            }
+
+            $umuntu-> name = $request->name;
+            $umuntu-> email = $request->email;
+            $umuntu-> password = $request->password;
+
+            $umuntu->save();
+
+
+        // $input = $request->all();
+        // $request = Random::all();
+
+        // $umuntu = $request->all();
+
+        // $validator = new Random;
+        
+
 
         return redirect()->route('random.index');
+
+        // return back();
+
+        // if ($validator)   //check all validations are fine, if not then redirect and show error messages
+        // {
+        //     return redirect()->route('random.index');
+        //     // validation failed redirect back to form
+
+        // }
+        // else
+        // {
+        //     //handle the form 
+        //     return back()->withInput()->withErrors($validator);
+
+        // }  
     }
 
     public function edit($id){

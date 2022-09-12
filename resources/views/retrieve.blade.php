@@ -19,6 +19,21 @@
         <a href="{{ route('random.create') }}" class="btn btn-primary" style="float: right; margin-top:2em;">Create</a>
         
 
+        @if ($errors->any())
+        {{dd($errors)}}
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>
+                    <div class="alert alert-success" role="alert">
+                        {{$error}}
+                    </div>
+                 </li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
         {{-- <div style="margin-top: 42px; position: relative" class="m-auto m-t-2">
         @if(session('aka_naga_session'))
             <div class="alert alert-success" role="alert">
